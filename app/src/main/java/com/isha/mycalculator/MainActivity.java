@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
             number_one+=bn.getText();
             numberOne = Double.parseDouble(number_one);
 
+            //check rook is present or not
+            if (root_present) {
+                numberOne = Math.sqrt(numberOne);
+            }
+
             switch (current_oprator) {
 
                 case "":
@@ -84,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void onClickOprator(View v) {
 
         Button ob = (Button) v;
@@ -110,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
 //          when operator cjick dot is not present in the number_one
             dot_present = false;
             number_allow = true;
+            root_present = false;
+            invert_allow = true;
 
         }
 
@@ -134,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
         updateCalculation();
         dot_present = false;
         number_allow = true;
+        root_present = false;
+        invert_allow = true;
     }
 
     public void updateCalculation() {
@@ -147,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             //check length of numberone
             if (number_one.length() == 0) {
                 number_one = "0.";
-                sCalculation = "0.";
+                sCalculation += "0.";
                 sAnswer = "0.";
                 dot_present = true;
                 updateCalculation();
@@ -293,5 +301,22 @@ public class MainActivity extends AppCompatActivity {
             return str.substring(0, str.length() - (i - 1));
         }
         return str.substring(0, str.length() - i);
+    }
+
+    public void onRootClick(View view) {
+        Button root = (Button) view;
+        //first check if root is present or not
+        if (sAnswer == "" && Result == 0 && !root_present) {
+            sCalculation = root.getText().toString();
+            root_present = true;
+            invert_allow = false;
+            updateCalculation();
+        } else if (getcharfromLast(sCalculation, 1) == ' ' && current_oprator != "" && !root_present) {
+            sCalculation += root.getText().toString();
+            root_present = true;
+            invert_allow = false;
+            updateCalculation();
+        }
+
     }
 }

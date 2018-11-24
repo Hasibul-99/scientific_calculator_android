@@ -65,6 +65,7 @@
                     android:layout_weight="1"
                     android:background="@color/horizontal_btn_color"
                     android:text="@string/root"
+                    android:onClick="onRootClick"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize" />
 
