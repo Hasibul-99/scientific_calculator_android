@@ -51,40 +51,54 @@ public class MainActivity extends AppCompatActivity {
 
             switch (current_oprator) {
 
-                case "":
-                    temp = Result + numberOne;
-                    sAnswer = format.format(temp).toString();
+                case ""://if current oprator is null
+                    if (power_present) {
+                        temp = Result + Math.pow(numberTwo, numberOne);
+                    } else {
+                        temp = Result + numberOne;
+                    }
                     break;
 
                 case "+":
-                    temp = Result + numberOne;
-                    sAnswer = format.format(temp).toString();
+                    if (power_present) {
+                        temp = Result + Math.pow(numberTwo, numberOne);
+                    } else {
+                        temp = Result + numberOne;
+                    }
                     break;
 
                 case "-":
-                    temp = Result - numberOne;
-                    sAnswer = format.format(temp).toString();
+                    if (power_present) {
+                        temp = Result - Math.pow(numberTwo, numberOne);
+                    } else {
+                        temp = Result - numberOne;
+                    }
                     break;
 
                 case "x":
-                    temp = Result * numberOne;
-                    sAnswer = format.format(temp).toString();
+                    if (power_present) {
+                        temp = Result * Math.pow(numberTwo, numberOne);
+                    } else {
+                        temp = Result * numberOne;
+                    }
                     break;
 
                 case "/":
-//                divided by 0 case
                     try {
-
-                        temp = Result / numberOne;
-                        sAnswer = format.format(temp).toString();
-
-                    } catch (Exception e){
-
-                        sAnswer=e.getMessage();
+                        // divided by 0 cause execption
+                        if (power_present) {
+                            temp = Result / Math.pow(numberTwo, numberOne)
+                        } else {
+                            temp = Result / numberOne;
+                        }
+                    } catch (Exception e) {
+                        sAnswer = e.getMessage();
                     }
                     break;
+
             }
 
+            sAnswer = format.format(temp).toString();
             updateCalculation();
         }
     }
@@ -112,10 +126,13 @@ public class MainActivity extends AppCompatActivity {
             updateCalculation();
 
 //          when operator cjick dot is not present in the number_one
+            number_two="";
+            numberTwo=0.0;
             dot_present = false;
             number_allow = true;
             root_present = false;
             invert_allow = true;
+            power_present = false;
 
         }
 
@@ -131,17 +148,18 @@ public class MainActivity extends AppCompatActivity {
         sAnswer = "";
         current_oprator = "";
         number_one = "";
-//        number_two = "";
+        number_two = "";
         prev_ans = "";
         Result = 0.0;
         numberOne = 0.0;
-//        numberTwo = 0.0;
+        numberTwo = 0.0;
         temp = 0.0;
         updateCalculation();
         dot_present = false;
         number_allow = true;
         root_present = false;
         invert_allow = true;
+        power_present = false;
     }
 
     public void updateCalculation() {
@@ -318,5 +336,20 @@ public class MainActivity extends AppCompatActivity {
             updateCalculation();
         }
 
+    }
+
+    public void onPowerClick(View view ) {
+        Button power = (Button) view;
+        if (sCalculation != "" && !root_present && !power_present) {
+            if (getcharfromLast(sCalculation, 1) != ' ') {
+                sCalculation += power.getText().toString();
+                //Need second variable for the power
+                number_two = number_one;
+                numberTwo = numberOne;
+                number_one = "";
+                power_present = true;
+                updateCalculation();
+            }
+        }
     }
 }

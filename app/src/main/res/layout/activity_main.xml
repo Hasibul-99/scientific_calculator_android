@@ -88,6 +88,7 @@
                     android:layout_weight="1"
                     android:background="@color/horizontal_btn_color"
                     android:text="@string/power"
+                    android:onClick="onPowerClick"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize" />
 
