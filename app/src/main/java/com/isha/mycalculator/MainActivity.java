@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         // divided by 0 cause execption
                         if (power_present) {
-                            temp = Result / Math.pow(numberTwo, numberOne)
+                            temp = Result / Math.pow(numberTwo, numberOne);
                         } else {
                             temp = Result / numberOne;
                         }
@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onPowerClick(View view ) {
+    public void onPowerClick(View view) {
         Button power = (Button) view;
         if (sCalculation != "" && !root_present && !power_present) {
             if (getcharfromLast(sCalculation, 1) != ' ') {
@@ -348,6 +348,52 @@ public class MainActivity extends AppCompatActivity {
                 numberTwo = numberOne;
                 number_one = "";
                 power_present = true;
+                updateCalculation();
+            }
+        }
+    }
+
+    public void onSquareClick(View view) {
+
+        if (sCalculation != "" && sAnswer != "") {
+            if (!root_present  && !power_present && getcharfromLast(sCalculation, 1) != ' ' && getcharfromLast(sCalculation, 1) != ' ') {
+                numberOne = numberOne * numberOne;
+                number_one = format.format(numberOne).toString();
+                if (current_oprator == "") {
+                    if (number_one.length() > 9) {
+                        number_one = longformate.format(numberOne);
+                    }
+                    sCalculation = number_one;
+                    temp = numberOne;
+                } else {
+                    switch (current_oprator) {
+                        case "+":
+                            temp = Result + numberOne;
+                            break;
+                        case "-":
+                            temp = Result - numberOne;
+                            break;
+                        case "x":
+                            temp = Result * numberOne;
+                            break;
+                        case "/":
+                            try {
+                                temp = Result / numberOne;
+                            } catch (Exception e) {
+                                sAnswer = e.getMessage();
+                            }
+                            break;
+                    }
+                    removeuntilchar(sCalculation, ' ');
+                    if (number_one.length() > 9) {
+                        number_one = longformate.format(numberOne);
+                    }
+                    sCalculation += number_one;
+                }
+                sAnswer = format.format(temp);
+                if (sAnswer.length() > 9) {
+                    sAnswer = longformate.format(temp);
+                }
                 updateCalculation();
             }
         }
