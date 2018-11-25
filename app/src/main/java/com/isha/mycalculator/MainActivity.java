@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     String sCalculation = "", sAnswer = "", number_one = "", number_two = "", current_oprator = "", prev_ans = "";
     Double Result = 0.0, numberOne = 0.0, numberTwo = 0.0, temp = 0.0;
     Boolean dot_present = false, number_allow = true, root_present = false, invert_allow = true, power_present = false;
+    Boolean factorial_present = false, constant_present = false, function_present = false, value_inverted = false;
 
     NumberFormat format, longformate;
 
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
             root_present = false;
             invert_allow = true;
             power_present = false;
+            function_present = false;
 
         }
 
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
         root_present = false;
         invert_allow = true;
         power_present = false;
+        function_present = false;
     }
 
     public void updateCalculation() {
@@ -205,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             dot_present = true;
             power_present = false;
             number_allow = false;
-//            factorial_present = false;
+            factorial_present = false;
 //            constant_present = false;
 //            function_present = false;
 //            value_inverted = false;
@@ -394,6 +397,49 @@ public class MainActivity extends AppCompatActivity {
                 if (sAnswer.length() > 9) {
                     sAnswer = longformate.format(temp);
                 }
+                updateCalculation();
+            }
+        }
+    }
+
+    public void onclickFactorial(View view) {
+
+        if (!sAnswer.equals("") && !factorial_present && !root_present && !dot_present && !power_present && !function_present) {
+            if (getcharfromLast(sCalculation, 1) != ' ') {
+                for (int i = 1; i < Integer.parseInt(number_one); i++) {
+                    numberOne *= i;
+                }
+                if (numberOne.equals(0.0)) {
+                    numberOne = 1.0;
+                }
+                number_one = format.format(numberOne).toString();
+                switch (current_oprator) {
+                    case "":
+                        Result = numberOne;
+                        break;
+                    case "+":
+                        Result += numberOne;
+                        break;
+                    case "-":
+                        Result -= numberOne;
+                        break;
+                    case "x":
+                        Result *= numberOne;
+                        break;
+                    case "/":
+                        try {
+                            Result /= numberOne;
+                        } catch (Exception e) {
+                            sAnswer = e.getMessage();
+                        }
+
+                        break;
+                }
+                sAnswer = Result.toString();
+                temp = Result;
+                sCalculation += "! ";
+                factorial_present = true;
+                number_allow = false;
                 updateCalculation();
             }
         }

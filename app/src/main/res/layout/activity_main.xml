@@ -101,6 +101,7 @@
                     android:layout_weight="1"
                     android:background="@color/horizontal_btn_color"
                     android:text="@string/factorial"
+                    android:onClick="onclickFactorial"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize" />
 
