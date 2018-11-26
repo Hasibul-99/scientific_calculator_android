@@ -113,6 +113,7 @@
                     android:layout_weight="1"
                     android:background="@color/horizontal_btn_color"
                     android:text="@string/inverse"
+                    android:onClick="onclickInverse"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize" />
 
@@ -124,6 +125,7 @@
                     android:layout_weight="1"
                     android:background="@color/horizontal_btn_color"
                     android:text="@string/pi"
+                    android:onClick="onClickPIorE"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize" />
 
@@ -135,6 +137,7 @@
                     android:layout_weight="1"
                     android:background="@color/horizontal_btn_color"
                     android:text="@string/e_constant"
+                    android:onClick="onClickPIorE"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize" />
 

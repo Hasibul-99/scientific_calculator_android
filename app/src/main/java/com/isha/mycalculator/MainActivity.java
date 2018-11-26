@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             invert_allow = true;
             power_present = false;
             function_present = false;
-
+            constant_present = false;
         }
 
     }
@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         invert_allow = true;
         power_present = false;
         function_present = false;
+        constant_present = false;
     }
 
     public void updateCalculation() {
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             power_present = false;
             number_allow = false;
             factorial_present = false;
-//            constant_present = false;
+            constant_present = false;
 //            function_present = false;
 //            value_inverted = false;
         }
@@ -444,4 +445,109 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void onclickInverse(View view) {
+
+        if (!sAnswer.equals("") && !factorial_present && !root_present && !dot_present && !power_present && !function_present) {
+            if (getcharfromLast(sCalculation, 1) != ' ') {
+                numberOne = Math.pow(numberOne, -1);
+                number_one = format.format(numberOne).toString();
+
+                switch (current_oprator) {
+                    case "":
+                        temp = numberOne;
+                        sCalculation = number_one;
+                        break;
+                    case "+":
+                        temp = Result + numberOne;
+                        removeuntilchar(sCalculation, ' ');
+                        sCalculation += number_one;
+                        break;
+                    case "-":
+                        temp = Result - numberOne;
+                        removeuntilchar(sCalculation, ' ');
+                        sCalculation += number_one;
+                        break;
+                    case "x":
+                        temp = Result * numberOne;
+                        removeuntilchar(sCalculation, ' ');
+                        sCalculation += number_one;
+                        break;
+                    case "/":
+                        try {
+                            temp = Result / numberOne;
+                            removeuntilchar(sCalculation, ' ')
+                            sCalculation += number_one;
+                        } catch (Exception e) {
+                            sAnswer = e.getMessage();
+                        }
+
+                        break;
+                }
+                sAnswer = format.format(temp).toString();
+                updateCalculation();
+            }
+        }
+    }
+
+    public void onClickPIorE(View view) {
+
+        Button btn_PIorE = (Button) view;
+        number_allow = false;
+        if (!root_present && !dot_present && !power_present && !factorial_present && !constant_present && !function_present) {
+            String str_PIorE = btn_PIorE.getText().toString() + " ";
+
+            if (!str_PIorE.equals("e ")) {
+                str_PIorE = "\u03A0" + " "
+            }
+
+            if (sCalculation == "") {
+                number_one = str_PIorE;
+                if (str_PIorE.equals("e ")) {
+                    numberOne = Math.E;
+                } else {
+                    numberOne = Math.PI
+                }
+                temp = numberOne;
+            } else {
+                if (str_PIorE.equals("e ")) {
+                    //use ternary operation
+                    numberOne = getcharfromLast(sCalculation, 1) == ' ' ? Math.E : Double.parseDouble(number_one) * Math.E;
+                } else {
+                    numberOne = getcharfromLast(sCalculation, 1) == ' ' ? Math.PI : Double.parseDouble(number_one) * Math.PI;
+                }
+                switch (current_oprator) {
+
+                    case "":
+                        temp = Result + numberOne;
+                        break;
+
+                    case "+":
+                        temp = Result + numberOne;
+                        break;
+
+                    case "-":
+                        temp = Result - numberOne;
+                        break;
+
+                    case "x"://we use x instedof * so change it in another function if you not.
+                        temp = Result * numberOne;
+                        break;
+
+                    case "/":
+                        try {
+                            temp = Result / numberOne;
+                        } catch (Exception e) {
+                            sAnswer = e.getMessage();
+                        }
+                        break;
+                }
+            }
+            sCalculation += str_PIorE;
+            sAnswer = format.format(temp).toString();
+            updateCalculation();
+            constant_present = true;
+        }
+    }
+
 }
